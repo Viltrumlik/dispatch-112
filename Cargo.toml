@@ -1,0 +1,26 @@
+[package]
+name = "dispatch112"
+version = "1.0.0"
+edition = "2021"
+description = "Navbatchi 112 / Dispetcher 112 / Dispatch 112 - a real-time emergency-dispatch simulator for the terminal"
+license-file = "LICENSE"
+readme = "README.md"
+publish = false
+
+[lib]
+name = "dispatch112"
+path = "src/lib.rs"
+
+[[bin]]
+name = "dispatch112"
+path = "src/main.rs"
+
+[dependencies]
+ratatui = "0.30"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 4
