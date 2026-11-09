@@ -1,5 +1,7 @@
 # Navbatchi 112 / Диспетчер 112 / Dispatch 112
 
+![Rust: 2021](https://img.shields.io/badge/Rust-2021-000000?logo=rust&logoColor=white) ![ratatui: 0.30](https://img.shields.io/badge/ratatui-0.30-6E40C9) ![tests: 55](https://img.shields.io/badge/tests-55-2ea44f) ![languages: uz · ru · en](https://img.shields.io/badge/languages-uz%20%C2%B7%20ru%20%C2%B7%20en-orange) ![license: proprietary](https://img.shields.io/badge/license-proprietary-lightgrey)
+
 A real-time emergency-dispatch simulator for the terminal. Calls scroll in, the ASCII map of the city of Yangiobod is
 alive with ambulances, fire engines and patrol cars, and you have minutes — game minutes, which pass quickly — to read
 each call, work out what is really going on, and send the right units, or dismiss it as a prank. Five night shifts,
@@ -15,6 +17,52 @@ Monday to Friday, 22:00 to 06:00. Somewhere in the fire calls, a quiet pattern i
 - A story thread: flag the arsonist's calls for Inspector Dilshod, set a trap, and catch him on Friday. Five endings.
 - Fully playable in Uzbek (Latin), Russian and English; switch at any time with `L`.
 - Three difficulties, a deterministic seeded simulation, a demo autoplay mode and a headless balance runner.
+
+## What it looks like
+
+Monday night, about an hour into the shift, captured from the built-in demo (`--autoplay --lang en`). Calls on
+the left, the city map in the middle (`H` hospital, `F` fire station, `P` police, digits are moving units, `!` is
+a waiting call), the fleet on the right, the selected call and the radio log below. In a real terminal it is in
+colour.
+
+```text
+ Monday 23:07 │ Trust ██████░░  63 │ Stress ░░░░░░░░   0 │ ×4 │ Coffee: C │ DEMO
+╭ Calls (2) ──────────────────╮╭ Yangiobod ───────────────────────────────────────────────╮╭ Units ────────────────────╮
+│▶#3  !   18m●Bazaar          ││┌──┬───┬─────────!───┬──────┬──────┬──────┬──────┬───────┐││ 1 A1 returning ~2m        │
+│ #5  !!   2m Old Town        │││··│···│·······♣♣♣♣♣♣│······│······│······│······│·······│││ 2 A2 at base ~5m          │
+│                             ││├──┼───┤·······♣♣♣♣♣♣│······│······│······│······│·······│││ 3 A3 at base ~5m          │
+│                             │││··│···│·······♣♣♣♣♣♣1······│······│······│······│·······│││ 4 F1 returning ~10m       │
+│                             ││├──┴───┼──────H──────┼─6────┼──────┼──────P──────┼───────┤││ 5 F2 at base ~11m         │
+│                             │││······│······│······│······│······│······│······│·······│││ 6 P1 at #3                │
+│                             │││······│······│······│······│······│······│······│·······│││ 7 P2 at base ~8m          │
+│                             ││└──────┼──────┴──────┼──────┴──────┼──────┴──────┼───────┘││                           │
+│                             ││≈≈≈≈≈≈≈║≈≈≈≈≈≈≈≈≈≈≈≈≈║≈≈≈≈≈≈≈≈≈≈≈≈≈║≈≈≈≈≈≈≈≈≈≈≈≈≈║≈≈≈≈≈≈≈≈││A ambulance                │
+│                             ││┌──────┼──────┬──────┼──────┬─4────F──────┬──────┼───────┐││F fire engine              │
+│                             │││······│······│······│······│▪▪▪▪▪▪│▪▪▪▪▪▪│♣♣♣♣♣♣│░░░░░░░│││P police                   │
+│                             │││······│······│······├──────┼──────┤▪▪▪▪▪▪│♣♣♣♣♣♣│░░░░░░░│││                           │
+│                             │││······│······│······│······│······│▪▪▪▪▪▪│♣♣♣♣♣♣│░░░░░░░│││                           │
+│                             ││├──────┼──────┼──────┼──────┴──┬───┼──────┼──────┤░░░░░░░│││                           │
+│                             │││······│······│······│▪▪▪▪▪▪▪▪▪│▪▪▪│▪▪▪▪▪▪│······│░░░░░░░│││                           │
+│                             │││══════│══════│══════│▪▪▪▪▪▪▪▪▪│▪▪▪│▪▪▪▪▪▪├──────┤░░░░░░░│││                           │
+│                             │││······│······│······│▪▪▪▪▪▪▪▪▪│▪▪▪│▪▪▪▪▪▪│······│░░░░░░░│││                           │
+│                             ││└──────┴──────┴──────┴─────────┴───┴──────┴──────┴───────┘││                           │
+╰─────────────────────────────╯╰ H hospital F fire station P police ──────────────────────╯╰───────────────────────────╯
+╭ Call #3 — Bazaar ──────────────────────────────────────────────────────╮╭ Radio ─────────────────────────────────────╮
+│!   minor · waiting 18 min                                              ││22:49 New call #3 — Bazaar                  │
+│“Someone is taking the wheels off my car right now — I can see them from││22:52 New call #4 — New Blocks              │
+│the window.”                                                            ││22:56 #4 dismissed                          │
+│Units: P1 on scene                                                      ││22:57 #2 resolved                           │
+│Pick units with 1–9, then Enter to send. D dismisses, F flags.          ││22:59 P1 on scene at #3                     │
+│                                                                        ││23:05 New call #5 — Old Town                │
+╰────────────────────────────────────────────────────────────────────────╯╰────────────────────────────────────────────╯
+ ↑↓ call  1-9 unit  Enter send  D dismiss  F flag  R recall  C coffee  Spc pause  ? help  Q quit
+```
+
+## Qisqacha · Кратко
+
+**🇺🇿 O'zbekcha.** Terminal uchun real vaqtli tez yordam dispetcheri simulyatori. Yangiobod shahri, dushanbadan jumagacha besh tungi smena. Qo'ng'iroqlarni o'qing, aslida nima bo'lganini aniqlang va kerakli xizmatni (tez yordam, o't o'chiruvchilar yoki politsiya) jo'nating, yolg'on chaqiruvlarni rad eting. Yong'in chaqiruvlari orasida o't qo'yuvchining izi yashiringan. 5 ta yakun, 3 qiyinlik darajasi. O'zbek tilida: `./target/release/dispatch112 --lang uz`.
+
+**🇷🇺 Русский.** Симулятор диспетчера службы 112 в реальном времени для терминала. Город Янгиобод, пять ночных смен с понедельника по пятницу. Читайте звонки, понимайте, что случилось на самом деле, отправляйте скорую, пожарных или полицию и отсеивайте ложные вызовы. Среди пожаров прячется почерк поджигателя. 5 концовок, 3 уровня сложности. На русском: `./target/release/dispatch112 --lang ru`.
 
 ## Story
 
@@ -55,6 +103,7 @@ moving units are shown by their key number, calls by `!` (yellow → red by seve
 ## Build and run
 
 ```sh
+git clone https://github.com/Viltrumlik/dispatch-112.git
 cd dispatch-112
 cargo build --release
 
@@ -151,6 +200,13 @@ dispatch-112/
 ```
 
 Design document: [docs/GDD.md](docs/GDD.md).
+
+## More games by Viltrumlik
+
+- [Karvonboshi](https://github.com/Viltrumlik/karvon-bot): Silk Road trading roguelite you play in a Telegram chat
+- [Last Shore](https://github.com/Viltrumlik/last-shore): pixel-art survival city-builder on a drying sea (browser)
+- [Night Express](https://github.com/Viltrumlik/night-express): text-adventure mystery on an overnight train (terminal)
+- [Zero to Mars](https://github.com/Viltrumlik/zero-to-mars): 3D founder life-sim Telegram WebApp
 
 ## License
 
